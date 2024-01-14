@@ -116,5 +116,5 @@ export TMPDIR='/home/ec2-user/tmpdir/'; python3 -m pip install -r requirements.t
 
 Launch Service
 ```bash
-python3 -m uvicorn main:app
+python3 -m uvicorn main:app # https://www.uvicorn.org/deployment/
 ```
