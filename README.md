@@ -62,7 +62,7 @@ Enter the command below (update domain as required)
 ```bash
 sudo vim /etc/nginx/conf.d/yourdomain.com.conf
 
-# i to insert content, esc to go back to comand and :wq to save and quite (:!q to quit without saving)
+# i to insert content, esc to go back to comand and :wq to save and quite (:qa! to quit without saving)
 ```
 Enter the details below (update domain and filenames etc as required)
 ```
