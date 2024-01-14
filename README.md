@@ -24,4 +24,87 @@ Repo used to setup tiny-llama - Credits to https://towardsdatascience.com/deploy
     ```
 * Open browser and browse to the url e.g. http://127.0.0.1/docs
 
-    
+# AWS Linux Instructions
+
+Install packages
+```bash
+sudo yum update
+sudo yum install git
+sudo yum install nginx
+sudo yum install certbot
+sudo yum groupinstall "Development Tools"
+curl https://pyenv.run | bash
+
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+
+pyenv install 3.10.13
+```
+
+Create SSL Certs
+
+Enter the command below (update domains as required)
+```
+sudo certbot certonly --manual --preferred-challenges=dns -d '*.yourdomain.com' -d 'yourdomain.com'
+
+# Renews in the future - sudo certbot renew --dry-run
+```
+
+Setup Nginx
+
+Enter the command below (update domain as required)
+```bash
+sudo vim /etc/nginx/conf.d/yourdomain.com.conf
+
+# i to insert content, esc to go back to comand and :wq to save and quite (:!q to quit without saving)
+```
+Enter the details below (update domain and filenames etc as required)
+```
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+
+    server_name yourdomain.com;
+
+    ssl_certificate /etc/letsencrypt/live/yourdomain.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/yourdomain.com/privkey.pem;
+
+    # Recommended SSL settings
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_ciphers 'ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384';
+    ssl_prefer_server_ciphers on;
+    ssl_session_cache shared:SSL:10m;
+
+    location / {
+        proxy_pass http://127.0.0.1:8000;
+    }
+}
+
+server {
+    listen 80;
+    listen [::]:80;
+    server_name yourdomain.com;
+    return 301 https://$server_name$request_uri;
+}
+
+```
+
+Enable Nginx
+```bash
+sudo systemctl start nginx
+sudo systemctl enable nginx
+sudo systemctl status nginx
+```
+
+Setup Repo
+```bash
+git clone https://github.com/gavinwun/tiny-llama.git
+cd tiny-llama
+pipinstall -r requirements.txt
+```
+
+Launch Service
+```bash
+python3 -m uvicorn main:app
+```
