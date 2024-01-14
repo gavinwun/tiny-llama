@@ -29,7 +29,7 @@ def model_query(messages: Messages):
     )
     outputs = pipe(
         prompt,
-        max_new_tokens=256,
+        max_new_tokens=1024,
         do_sample=True,
         temperature=0.7,
         top_k=50,

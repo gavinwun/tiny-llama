@@ -83,6 +83,9 @@ server {
 
     location / {
         proxy_pass http://127.0.0.1:8000;
+        proxy_connect_timeout 60s;
+        proxy_send_timeout 60s;
+        proxy_read_timeout 180s;  # Set to 3 minutes (180 seconds)
     }
 }
 
@@ -104,9 +107,11 @@ sudo systemctl status nginx
 
 Setup Repo
 ```bash
+mkdir /home/ec2-user/tmpdir # temp drive might be too small when using Amazon Linux, create a tmpdir instead and use that
 git clone https://github.com/gavinwun/tiny-llama.git
 cd tiny-llama
-pipinstall -r requirements.txt
+
+export TMPDIR='/home/ec2-user/tmpdir/'; python3 -m pip install -r requirements.txt
 ```
 
 Launch Service

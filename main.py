@@ -14,6 +14,11 @@ async def root():
 @app.post("/query")
 async def root(messages: Messages): 
     print("query invoked")
-    print(messages)   
+    print(messages)
+    
+    # Should implement your own API key validation logic here
+    if(messages.api_key != "some_api_key_here_logic_etc"):
+        return {"message": "Invalid API Key", "status": "401"}
+    
     res = model_query(messages)
     return {"message": f"{res}"}

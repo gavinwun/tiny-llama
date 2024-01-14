@@ -6,3 +6,4 @@ class Message(BaseModel):
 
 class Messages(BaseModel):
     messages: list[Message]
+    api_key: str
