@@ -34,6 +34,7 @@ sudo yum install nginx
 sudo amazon-linux-extras install epel
 sudo yum install certbot
 sudo yum groupinstall "Development Tools"
+sudo yum install gcc zlib-devel bzip2 bzip2-devel readline-devel sqlite sqlite-devel openssl-devel tk-devel libffi-devel xz-devel
 curl https://pyenv.run | bash
 
 export PYENV_ROOT="$HOME/.pyenv"
