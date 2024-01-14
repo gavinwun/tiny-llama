@@ -31,6 +31,7 @@ Install packages
 sudo yum update
 sudo yum install git
 sudo yum install nginx
+sudo amazon-linux-extras install epel
 sudo yum install certbot
 sudo yum groupinstall "Development Tools"
 curl https://pyenv.run | bash
@@ -40,6 +41,7 @@ export PYENV_ROOT="$HOME/.pyenv"
 eval "$(pyenv init -)"
 
 pyenv install 3.10.13
+pyenv global 3.10.13
 ```
 
 Create SSL Certs
