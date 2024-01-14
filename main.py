@@ -1,9 +1,7 @@
+import json
 from fastapi import FastAPI
+from messages_type import Messages
 from model import model_query
-from pydantic import BaseModel
-
-class Query(BaseModel):
-    prompt: str
 
 app = FastAPI()
 
@@ -14,6 +12,8 @@ async def root():
 
 
 @app.post("/query")
-async def root(query: Query):
-    res = model_query(query=query.prompt)
+async def root(messages: Messages): 
+    print("query invoked")
+    print(messages)   
+    res = model_query(messages)
     return {"message": f"{res}"}
