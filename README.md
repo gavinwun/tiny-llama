@@ -37,6 +37,7 @@ sudo yum groupinstall "Development Tools"
 sudo yum install gcc zlib-devel bzip2 bzip2-devel readline-devel sqlite sqlite-devel openssl-devel tk-devel libffi-devel xz-devel
 curl https://pyenv.run | bash
 
+# add below to ~/.bashrc as well
 export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
