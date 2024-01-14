@@ -13,8 +13,11 @@ def model_query(messages: Messages):
         "text-generation",
         model="TinyLlama/TinyLlama-1.1B-Chat-v1.0",
         torch_dtype=torch.bfloat16,
-        device_map="cpu",
+        # Use "cuda" to run on GPU 
+        device_map="cpu", 
     )
+    
+    print(f'CUDA is available = {torch.cuda.is_available()}')
 
     # We use the tokenizer's chat template to format each message - see https://huggingface.co/docs/transformers/main/en/chat_templating
     # messages = [
@@ -29,7 +32,7 @@ def model_query(messages: Messages):
     )
     outputs = pipe(
         prompt,
-        max_new_tokens=1024,
+        max_new_tokens=4096,
         do_sample=True,
         temperature=0.7,
         top_k=50,

@@ -15,11 +15,11 @@ Repo used to setup tiny-llama - Credits to https://towardsdatascience.com/deploy
     ```
 * Setup repo
     ```bash
-    pip install -r requirements.txt
+    pip install -r requirements.txt # NOTE - see CUDA section if you want to use that instead of CPU
     ```
 * Run the script
     ```bash
-    # An URL will show in the terminal  e.g. http://127.0.0.1:8000
+    # An URL will show in the terminal  e.g. http://127.0.0.1:8000 
     uvicorn main:app --reload
     ```
 * Open browser and browse to the url e.g. http://127.0.0.1/docs
@@ -113,10 +113,23 @@ mkdir /home/ec2-user/tmpdir # temp drive might be too small when using Amazon Li
 git clone https://github.com/gavinwun/tiny-llama.git
 cd tiny-llama
 
-export TMPDIR='/home/ec2-user/tmpdir/'; python3 -m pip install -r requirements.txt
+export TMPDIR='/home/ec2-user/tmpdir/'; python3 -m pip install -r requirements.txt # NOTE - see CUDA section if you want to use that instead of CPU
 ```
 
 Launch Service
 ```bash
 python3 -m uvicorn main:app # https://www.uvicorn.org/deployment/
 ```
+
+## CUDA
+
+Do the following to enable CUDA 
+```bash
+# recreate the environment in conda etc, and do not install requirements yet, and install below first
+nvcc --version # check cuda version first to match the url below (has to be one that's available at pytorch etc)
+conda remove pytorch torchvision torchaudio cudatoolkit 
+pip3 install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu118
+# now you can pip install packages from requirements.txt - e.g. pip install -r requirements.txt
+```
+
+Once the above is done, modify model.py and change device_map option from cpu to cuda, and increase/decrease max_new_tokens as desired (depending on your GPU etc)
