@@ -42,6 +42,13 @@ Using Windows 11 and development with VSCode. All commands were performed using 
     # Install other required packages
     pip install -r requirements.txt # NOTE - see CUDA section if you want to use that instead of CPU
     ```
+* Download quantized models (optional)
+    * if you want to test the quantized models (later you can post via REST API by POST to /query/quantized)
+    ```bash
+    pip3 install huggingface-hub
+    huggingface-cli download TheBloke/Llama-2-7b-Chat-GGUF llama-2-7b-chat.Q4_K_M.gguf --local-dir ./quantized --local-dir-use-symlinks False
+    huggingface-cli download TheBloke/TinyLlama-1.1B-Chat-v1.0-GGUF tinyllama-1.1b-chat-v1.0.Q4_K_M.gguf --local-dir ./quantized --local-dir-use-symlinks False
+    ```
 * Run the script
     ```bash
     # Check model.py to set to use cuda or cpu, max_tokens etc as required
