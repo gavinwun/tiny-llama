@@ -4,7 +4,29 @@ Repo used to setup tiny-llama - Credits to https://towardsdatascience.com/deploy
 
 # Environment Setup
 
-* Install Miniconda on Linux/WSL2 - https://kontext.tech/article/1064/install-miniconda-and-anaconda-on-wsl-2-or-linux
+Note: setup is just specific to the version I was using at the time of writing, feel free to update and change as required.
+
+Using Windows 11 and development with VSCode. All commands were performed using WSL2 terminal with Ubuntu 22.04 distro.
+
+* CUDA Toolkit Install (handy for any packages and wants to build with it)
+    ```bash
+    sudo apt install build-essential
+    # https://developer.nvidia.com/cuda-11-8-0-download-archive?target_os=Linux&target_arch=x86_64&Distribution=WSL-Ubuntu&target_version=2.0&target_type=deb_local
+    wget https://developer.download.nvidia.com/compute/cuda/repos/wsl-ubuntu/x86_64/cuda-wsl-ubuntu.pin
+    sudo mv cuda-wsl-ubuntu.pin /etc/apt/preferences.d/cuda-repository-pin-600
+    wget https://developer.download.nvidia.com/compute/cuda/11.8.0/local_installers/cuda-repo-wsl-ubuntu-11-8-local_11.8.0-1_amd64.deb
+    sudo dpkg -i cuda-repo-wsl-ubuntu-11-8-local_11.8.0-1_amd64.deb
+    sudo cp /var/cuda-repo-wsl-ubuntu-11-8-local/cuda-*-keyring.gpg /usr/share/keyrings/
+    sudo apt-get update
+    sudo apt-get -y install cuda
+
+    # Setup paths
+    echo 'export PATH=/usr/local/cuda-11.8/bin:$PATH' >> ~/.bashrc
+    echo 'export LD_LIBRARY_PATH=/usr/local/cuda-11.8/lib64:$LD_LIBRARY_PATH' >> ~/.bashrc
+    source ~/.bashrc
+    sudo ldconfig
+    ```
+* Install Miniconda - https://kontext.tech/article/1064/install-miniconda-and-anaconda-on-wsl-2-or-linux
     * Setup conda evironment 
     ```bash
     conda create -n tiny-llama 
