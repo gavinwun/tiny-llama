@@ -18,3 +18,10 @@ llama cpp python docs - https://llama-cpp-python.readthedocs.io/en/latest/api-re
 # Usage
 
 Modify model-quantized.py to the model you'd like to use, and tweak the settings to fit your GPU/CPU etc.
+
+Then run directly 
+
+```bash
+cd quantized
+python ./model-quantized.py
+```
