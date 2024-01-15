@@ -49,6 +49,22 @@ Using Windows 11 and development with VSCode. All commands were performed using 
     uvicorn main:app --reload
     ```
 * Open browser and browse to the url e.g. http://127.0.0.1/docs
+* Test the POST queries with below sample JSON
+```json
+{
+  "messages": [
+    {
+      "role": "system",
+      "content": "You are a story generator"
+    },
+{
+      "role": "user",
+      "content": "Create a story about super hero with thunder power, along with an image prompt prefixed with 'image prompt:'"
+    }
+  ],
+  "api_key": "some_api_key_here_logic_etc"
+}
+```
 
 # AWS Linux Instructions
 
