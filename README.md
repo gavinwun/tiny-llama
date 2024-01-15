@@ -4,7 +4,7 @@ Repo used to setup tiny-llama - Credits to https://towardsdatascience.com/deploy
 
 # Environment Setup
 
-* Install Anaconda (recommended) - https://www.anaconda.com/
+* Install Miniconda on Linux/WSL2 - https://kontext.tech/article/1064/install-miniconda-and-anaconda-on-wsl-2-or-linux
     * Setup conda evironment 
     ```bash
     conda create -n tiny-llama 
@@ -15,10 +15,14 @@ Repo used to setup tiny-llama - Credits to https://towardsdatascience.com/deploy
     ```
 * Setup repo
     ```bash
+    # Install torch with cuda support if supported
+    pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu118
+    # Install other required packages
     pip install -r requirements.txt # NOTE - see CUDA section if you want to use that instead of CPU
     ```
 * Run the script
     ```bash
+    # Check model.py to set to use cuda or cpu, max_tokens etc as required
     # An URL will show in the terminal  e.g. http://127.0.0.1:8000 
     uvicorn main:app --reload
     ```
@@ -37,7 +41,7 @@ sudo yum groupinstall "Development Tools"
 sudo yum install gcc zlib-devel bzip2 bzip2-devel readline-devel sqlite sqlite-devel openssl-devel tk-devel libffi-devel xz-devel
 curl https://pyenv.run | bash
 
-# add below to ~/.bashrc as well
+# add below pyenv commands to ~/.bashrc as well
 export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
@@ -120,16 +124,3 @@ Launch Service
 ```bash
 python3 -m uvicorn main:app # https://www.uvicorn.org/deployment/
 ```
-
-## CUDA
-
-Do the following to enable CUDA 
-```bash
-# recreate the environment in conda etc, and do not install requirements yet, and install below first
-nvcc --version # check cuda version first to match the url below (has to be one that's available at pytorch etc)
-conda remove pytorch torchvision torchaudio cudatoolkit 
-pip3 install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu118
-# now you can pip install packages from requirements.txt - e.g. pip install -r requirements.txt
-```
-
-Once the above is done, modify model.py and change device_map option from cpu to cuda, and increase/decrease max_new_tokens as desired (depending on your GPU etc)
